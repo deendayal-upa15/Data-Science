@@ -22,7 +22,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix   #performance metr
 
 #importing data and making a copy
 
-income_data = pd.read_csv('data/incomeData.csv')
+income_data = pd.read_csv('incomeData.csv')
 data = income_data.copy()
 
 """
@@ -56,7 +56,7 @@ print(np.unique(data['occupation']))
 #we found some '?' instead of nan
 
 #reading again by including "na_values[' ?']" to consider ' ?' as nan
-data = pd.read_csv('data/incomeData.csv', na_values=[" ?"])
+data = pd.read_csv('incomeData.csv', na_values=[" ?"])
 
 
 """ Data Pre-processing """
@@ -173,50 +173,6 @@ print(accuracy_score)
 print('misclassified samples: %d' %(test_y != prediction).sum())
 
 
-
-""" LOGISTIC REGRESION - Removing insignificant variables """
-
-# Reindexing the salary status names to 0,1
-data2['SalStat']=data2['SalStat'].map({' less than or equal to 50,000':0,' greater than 50,000':1})
-print(data2['SalStat'])
-
-cols = ['gender','nativecountry','race','JobType']
-new_data = data2.drop(cols,axis = 1)
-
-new_data=pd.get_dummies(new_data, drop_first=True)
-
-# Storing the column names 
-columns_list2=list(new_data.columns)
-print(columns_list2)
-
-# Separating the input names from data
-features2=list(set(columns_list2)-set(['SalStat']))
-print(features2)
-
-# Storing the output values in y
-y2=new_data['SalStat'].values
-print(y2)
-
-# Storing the values from input features
-x2 = new_data[features2].values
-print(x2)
-
-# Splitting the data into train and test
-train_x2,test_x2,train_y2,test_y2 = train_test_split(x2,y2,test_size=0.3, random_state=0)
-
-# Make an instance of the Model
-logistic2 = LogisticRegression()
-
-# Fitting the values for x and y
-logistic2.fit(train_x2,train_y2)
-
-# Prediction from test data
-prediction2 = logistic2.predict(test_x2)
-
-# Printing the misclassified values from prediction
-print('Misclassified samples: %d' % (test_y2 != prediction2).sum())
-
-
 """ KNN """
 
 #importing KNN library and plotting 
@@ -257,7 +213,4 @@ for i in range (1 , 20):
     
 print(Misclassified_sample)
 
-
-
-
-
+""" End of Script """
